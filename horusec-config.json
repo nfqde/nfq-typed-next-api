@@ -1,0 +1,37 @@
+{
+    "horusecCliCertInsecureSkipVerify": true,
+    "horusecCliCertPath": "",
+    "horusecCliContainerBindProjectPath": "",
+    "horusecCliCustomRulesPath": "",
+    "horusecCliDisableDocker": false,
+    "horusecCliEnableCommitAuthor": true,
+    "horusecCliEnableGitHistoryAnalysis": true,
+    "horusecCliEnableInformationSeverity": true,
+    "horusecCliFilesOrPathsToIgnore": [
+      "*tmp*",
+      "*__reactpreview__*",
+      "*data*",
+      "*.github*",
+      "*.vscode*",
+      "*.next*",
+      "*.nyc_output*",
+      "*coverage*",
+      "*cypress*",
+      "*deploy*",
+      "*out*",
+      "*node_modules*"
+    ],
+    "horusecCliFilterPath": "./src",
+    "horusecCliHeaders": {},
+    "horusecCliMonitorRetryInSeconds": 15,
+    "horusecCliPrintOutputType": "text",
+    "horusecCliRepositoryName": "Modules Template",
+    "horusecCliReturnErrorIfFoundVulnerability": true,
+    "horusecCliSeveritiesToIgnore": [
+      "INFO"
+    ],
+    "horusecCliTimeoutInSecondsAnalysis": 600,
+    "horusecCliTimeoutInSecondsRequest": 300,
+    "horusecCliEnableOwaspDependencyCheck": true,
+    "horusecCliEnableShellcheck": false
+  }

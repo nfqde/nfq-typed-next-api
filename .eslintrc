@@ -1,0 +1,10 @@
+{
+    "extends": [
+        "@nfq"
+    ],
+    "ignorePatterns": [
+        "types",
+        "dist"
+    ],
+    "rules": {}
+}
