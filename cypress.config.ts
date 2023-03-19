@@ -40,7 +40,11 @@ export default defineConfig({
                             '.jpg',
                             '.json',
                             '.svg'
-                        ]
+                        ],
+                        fallback: {
+                            crypto: false,
+                            process: false
+                        }
                     },
                     target: 'web'
                 };
