@@ -15,8 +15,8 @@ export default [
             ...pkg.devDependencies,
             ...pkg.peerDependencies,
             ...pkg.dependencies
-        } || {})],
-        input: 'src/index.tsx',
+        } || {}), 'next/config', 'next/router', 'swr/mutation'],
+        input: 'src/index.ts',
         output: [
             {
                 exports: 'named',

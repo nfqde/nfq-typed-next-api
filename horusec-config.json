@@ -25,7 +25,7 @@
     "horusecCliHeaders": {},
     "horusecCliMonitorRetryInSeconds": 15,
     "horusecCliPrintOutputType": "text",
-    "horusecCliRepositoryName": "Modules Template",
+    "horusecCliRepositoryName": "Typed Next Api Module",
     "horusecCliReturnErrorIfFoundVulnerability": true,
     "horusecCliSeveritiesToIgnore": [
       "INFO"
