@@ -5,12 +5,13 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 export type TypedRouteType = <
     METHOD extends HTTP_METHODS,
     R extends {data?: unknown; message?: unknown; status: HTTP_STATUS},
+    REQUEST extends NextApiRequest = NextApiRequest,
     BODY = undefined,
     QUERY = undefined
 >(
     method: METHOD,
     handler: (
-        req: NextApiRequest,
+        req: REQUEST,
         res: NextApiResponse,
         body: BODY,
         query: QUERY
@@ -32,7 +33,8 @@ export type TypedRouteType = <
  */
 export const TypedRoute: TypedRouteType = (method, handler) => (
     async (req: NextApiRequest, res: NextApiResponse) => {
-        const response = await handler(req, res, req.body as never, req.query as never);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        const response = await handler(req as any, res, req.body as never, req.query as never);
 
         res.status(response.status).send(response.data ?? response.message);
     }) as any;

@@ -49,7 +49,7 @@ export const useApi = <T extends ApiMethod>(
         = useSwr<ApiResponse<T>['data'], RequestError<T>>(url ? `${basePath}${url}` : null, fetcher, swrOptions);
 
     return {
-        data: data.data as ApiResponse<T>['data'] || data,
+        data: data?.data as ApiResponse<T>['data'] || data,
         error,
         isValidating,
         mutate
