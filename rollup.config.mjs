@@ -23,6 +23,7 @@ export default [
                 file: pkg.exports['.'].require,
                 format: 'cjs',
                 globals,
+                interop: 'auto',
                 name: pkg.name,
                 sourcemap: true
             },
