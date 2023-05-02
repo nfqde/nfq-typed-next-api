@@ -56,7 +56,6 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.5",
     "@cypress/code-coverage": "^3.10.4",
-    "@cypress/react": "^7.0.3",
     "@cypress/webpack-dev-server": "^3.4.1",
     "@lopatnov/rollup-plugin-uglify": "^2.1.5",
     "@nfq/eslint-config": "^2.3.0",
@@ -68,8 +67,8 @@
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.0",
     "@types/webpack": "^5.28.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-styled-components": "^2.1.1",
@@ -101,13 +100,16 @@
     "node-polyfill-webpack-plugin": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^3.21.2",
+    "rollup": "^3.21.3",
     "rollup-plugin-cleaner": "^1.0.0",
     "terser": "^5.17.1",
     "typescript": "^5.0.4",
     "webpack": "^5.81.0",
     "webpack-cli": "^5.0.2",
     "webpack-dev-server": "4.13.3"
+  },
+  "external": {
+    "swr": "^2.1.5"
   },
   "standard-version": {
     "scripts": {
