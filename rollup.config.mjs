@@ -12,9 +12,8 @@ const globals = {};
 export default [
     {
         external: [...Object.keys({
-            ...pkg.devDependencies,
             ...pkg.peerDependencies,
-            ...pkg.dependencies
+            ...pkg.external
         } || {}), 'next/config', 'next/router', 'swr/mutation'],
         input: 'src/index.ts',
         output: [

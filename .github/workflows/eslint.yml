@@ -12,36 +12,43 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-v1-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-v1-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-v1-
+
       - name: Set Tokens
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
-        env:
-          CI: TRUE
+
       - name: Install Pnpm
         run: sudo npm -g i pnpm
-        env:
-          CI: TRUE
+
+      - name: Get pnpm cache directory path
+        id: pnpm-cache-dir-path
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: |
+            ${{ steps.pnpm-cache-dir-path.outputs.STORE_PATH }}
+            ~/.cache
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install Node Dependencies
-        run: pnpm install
-        env:
-          CI: TRUE
+        run: pnpm install --no-frozen-lockfile
+
       - name: Test Code Linting
         run: pnpm run lint
+
       - name: Save Code Linting Report JSON
         run: pnpm run lint:report
         continue-on-error: true
+
       - name: Annotate Code Linting Results
         uses: ataylorme/eslint-annotate-action@1.0.4
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           report-json: "eslint_report.json"
+
       - name: Upload ESLint report
         uses: actions/upload-artifact@v1
         with:

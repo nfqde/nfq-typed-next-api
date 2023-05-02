@@ -8,35 +8,44 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Node.JS 16.x
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/node_modules
-            ~/.cache
-          key: ${{ runner.OS }}-cypress-v1-${{ hashFiles('**/package-lock.json') }}
+
       - name: Set Tokens
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
-        env:
-          CI: TRUE
+
       - name: Install Pnpm
         run: sudo npm -g i pnpm
-        env:
-          CI: TRUE
+
+      - name: Get pnpm cache directory path
+        id: pnpm-cache-dir-path
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: |
+            ${{ steps.pnpm-cache-dir-path.outputs.STORE_PATH }}
+            ~/.cache
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install Node Dependencies
         run: pnpm install
-        env:
-          CI: TRUE
+
       - name: Cypress.io
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v2.9.7
         with:
-          browser: electron
+          config-file: cypress.json
+          browser: chrome
           command: pnpm run test
           install: false
+          headless: true
+
       - name: Cypress report action
         uses: dmitry/cypress-report-action@1.0.0
         with:
