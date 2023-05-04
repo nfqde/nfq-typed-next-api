@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.1.2...v1.2.0) (2023-05-04)
+
+
+### Features
+
+* **Fetch:** Allow empty responses ([#4](https://github.com/nfqde/nfq-typed-next-api/issues/4)) ([ea5fe0c](https://github.com/nfqde/nfq-typed-next-api/commit/ea5fe0ce2ee902926b380dfdd24e7fcc7396dd88))
+
 ### [1.1.2](https://github.com/nfqde/nfq-typed-next-api/compare/v1.1.1...v1.1.2) (2023-05-02)
 
 
