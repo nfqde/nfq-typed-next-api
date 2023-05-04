@@ -69,10 +69,15 @@ export const fetcher = async <T extends ApiMethod>(
         throw error;
     }
 
-    const data = await response.json() as ApiResponse<T>;
+    try {
+        const data = await response.json() as ApiResponse<T>;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return data;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return data;
+    } catch {
+        // eslint-disable-next-line no-undefined
+        return undefined;
+    }
 };
 
 /**
