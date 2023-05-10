@@ -4,15 +4,30 @@ import type {HTTP_METHODS} from './constants';
 
 export type ApiReturn = Promise<{data?: unknown; message?: string; status: HTTP_STATUS}>;
 export type ApiMethod = (req: never, res: never, method: never, body: never, query: never) => ApiReturn;
+export type RepositoryMethod = (key: never, args: MutationRepositoryArgs<ApiMethod>) => Promise<unknown>;
 export type ApiResponse<T extends ApiMethod> = Awaited<ReturnType<T>>;
+export type RepositoryResponse<T extends RepositoryMethod> = Awaited<ReturnType<T>>;
 export interface RequestError<T extends ApiMethod> extends Error {
     info: ApiResponse<T>['message'];
     status: ApiResponse<T>['status'];
 }
+
+export interface RepositoryError extends Error {
+    info: string[] | string;
+    status: HTTP_STATUS;
+}
+
 // eslint-disable-next-line @nfq/no-magic-numbers
 export type ApiRequestBody<T extends ApiMethod> = Parameters<T>[3];
 // eslint-disable-next-line @nfq/no-magic-numbers
 export type ApiRequestMethod<T extends ApiMethod> = Parameters<T>[2];
+
+// eslint-disable-next-line @nfq/no-magic-numbers
+export type RepositoryRequestBody<T extends RepositoryMethod>
+    = Parameters<T>[1]['args'] extends {body: any} ? Parameters<T>[1]['args']['body'] : undefined;
+// eslint-disable-next-line @nfq/no-magic-numbers
+export type RepositoryRequestMethod<T extends RepositoryMethod>
+    = Parameters<T>[1]['args'] extends {method: any} ? Parameters<T>[1]['args']['method'] : undefined;
 
 export interface RequestOptions<T extends ApiMethod> {
     body?: ApiRequestBody<T>;
@@ -20,11 +35,24 @@ export interface RequestOptions<T extends ApiMethod> {
     method?: ApiRequestMethod<T>;
 }
 
+export type MutationRepositoryArgs<T extends ApiMethod> = {
+    args: MutationRequestOptions<T>;
+};
+
 export type MutationRequestOptions<T extends ApiMethod> = {
     asFormData?: boolean;
     headers?: Record<string, string>;
 } & (ApiRequestBody<T> extends undefined ? Omit<{body: never}, 'body'> : {body: ApiRequestBody<T>})
 & (ApiRequestMethod<T> extends HTTP_METHODS.GET ? Omit<{method: never}, 'method'> : {method: ApiRequestMethod<T>});
+
+export type MutationRepositoryOptions<T extends RepositoryMethod> = {
+    asFormData?: boolean;
+    headers?: Record<string, string>;
+} & (RepositoryRequestBody<T> extends undefined ? Omit<{body: never}, 'body'> : {body: RepositoryRequestBody<T>})
+& (
+    RepositoryRequestMethod<T> extends HTTP_METHODS.GET
+    ? Omit<{method: never}, 'method'> : {method: RepositoryRequestMethod<T>}
+);
 
 /**
  * The fetcher method for all swr hooks.
@@ -57,7 +85,7 @@ export const fetcher = async <T extends ApiMethod>(
         const error = new Error('Something went wrong') as RequestError<T>;
 
         try {
-            const data = await response.json() as ApiResponse<T>;
+            const data = await response.json() as ApiResponse<T>['message'];
 
             error.info = data;
             error.status = response.status;
@@ -70,10 +98,8 @@ export const fetcher = async <T extends ApiMethod>(
     }
 
     try {
-        const data = await response.json() as ApiResponse<T>;
-
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return data;
+        return await response.json() as ApiResponse<T>['data'];
     } catch {
         // eslint-disable-next-line no-undefined
         return undefined;
@@ -135,7 +161,7 @@ export const mutationFetcher = async <T extends ApiMethod>(
         const error = new Error('Something went wrong') as RequestError<T>;
 
         try {
-            const data = await response.json() as ApiResponse<T>;
+            const data = await response.json() as ApiResponse<T>['message'];
 
             error.info = data;
             error.status = response.status;
