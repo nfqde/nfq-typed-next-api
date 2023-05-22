@@ -20,9 +20,8 @@ import type {BareFetcher, Key, SWRConfiguration} from 'swr';
 import type {SWRInfiniteConfiguration, SWRInfiniteKeyLoader} from 'swr/infinite';
 import type {SWRMutationConfiguration} from 'swr/mutation';
 
-const {publicRuntimeConfig: {basePath = ''}}
-    = getConfig() as {publicRuntimeConfig: {basePath?: string}} | undefined
-    ?? {publicRuntimeConfig: {basePath: ''}};
+const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | undefined)?.publicRuntimeConfig?.basePath
+    ?? '';
 
 /**
  * Non hook version of api.
