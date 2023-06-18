@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.3.2...v1.4.0) (2023-06-18)
+
+
+### Features
+
+* **useRepository:** Allow params for repository functions ([#8](https://github.com/nfqde/nfq-typed-next-api/issues/8)) ([9d105af](https://github.com/nfqde/nfq-typed-next-api/commit/9d105afd2a58e581b7a4148d5df03189aa600a92))
+
 ### [1.3.2](https://github.com/nfqde/nfq-typed-next-api/compare/v1.3.1...v1.3.2) (2023-05-22)
 
 
