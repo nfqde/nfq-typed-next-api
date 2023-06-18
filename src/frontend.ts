@@ -1,3 +1,5 @@
+import {useMemo} from 'react';
+
 import getConfig from 'next/config';
 import useSwr, {preload} from 'swr';
 import useSwrInfinite from 'swr/infinite';
@@ -95,6 +97,10 @@ export const useInfiniteApi = <T extends ApiMethod>(
     };
 };
 
+type RepositorySwrOptions<T extends RepositoryMethod> =
+    SWRConfiguration<RepositoryResponse<T>, RepositoryError, BareFetcher<RepositoryResponse<T>>>
+    & {body: Parameters<T>};
+
 /**
  * Get request hook.
  *
@@ -106,10 +112,15 @@ export const useInfiniteApi = <T extends ApiMethod>(
 export const useRepository = <T extends RepositoryMethod>(
     cacheKey: string | null,
     fetchFunction: BareFetcher<RepositoryResponse<T>>,
-    swrOptions?: SWRConfiguration<RepositoryResponse<T>, any, BareFetcher<RepositoryResponse<T>>>
+    swrOptions?: RepositorySwrOptions<T>
 ) => {
+    const repoFetcher = useMemo(
+        () => fetchFunction.bind(null, ...(swrOptions?.body ?? [])),
+        [swrOptions?.body, fetchFunction]
+    );
+
     const {data, error, isValidating, mutate}
-        = useSwr<RepositoryResponse<T>, RepositoryError>(cacheKey ?? null, fetchFunction, swrOptions);
+        = useSwr<RepositoryResponse<T>, RepositoryError>(cacheKey ?? null, repoFetcher, swrOptions);
 
     return {
         data,
