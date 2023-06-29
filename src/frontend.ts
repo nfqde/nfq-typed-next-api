@@ -22,6 +22,8 @@ import type {BareFetcher, Key, SWRConfiguration} from 'swr';
 import type {SWRInfiniteConfiguration, SWRInfiniteKeyLoader} from 'swr/infinite';
 import type {SWRMutationConfiguration} from 'swr/mutation';
 
+type ApiReturn<T extends ApiMethod> = T extends {data: any} ? T['data'] : undefined;
+
 const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | undefined)?.publicRuntimeConfig?.basePath
     ?? '';
 
@@ -41,7 +43,7 @@ export const api = async <T extends ApiMethod>(
         headers = {},
         method
     }: RequestOptions<T> = {}
-): Promise<ApiResponse<T>['data']> => fetcher<T>(url, {
+): Promise<ApiReturn<Awaited<ReturnType<T>>>> => fetcher<T>(url, {
     body,
     headers,
     method
