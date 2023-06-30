@@ -11,4 +11,4 @@ export {
 } from './frontend';
 export {HTTP_METHODS, HTTP_STATUS} from './utils/constants';
 export {fetcher, mutationFetcher} from './utils/fetchers';
-export type {MutationRepositoryArgs, RepositoryError, RequestError} from './utils/fetchers';
+export type {MutationRepoArgs, RepositoryError, RequestError} from './utils/fetchers';
