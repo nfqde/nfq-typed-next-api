@@ -4,7 +4,7 @@ import type {HTTP_METHODS} from './constants';
 
 export type ApiReturn = Promise<{data?: unknown; message?: string; status: HTTP_STATUS}>;
 export type ApiMethod = (req: never, res: never, method: never, body: never, query: never) => ApiReturn;
-export type RepositoryMethod = (key: never, args: MutationRepositoryArgs<ApiMethod>) => Promise<unknown>;
+export type RepositoryMethod = (key: never, args: MutationRepositoryArgs) => Promise<unknown>;
 export type ApiResponse<T extends ApiMethod> = Awaited<ReturnType<T>>;
 export type RepositoryResponse<T extends RepositoryMethod> = Awaited<ReturnType<T>>;
 export interface RequestError<T extends ApiMethod> extends Error {
@@ -35,8 +35,14 @@ export interface RequestOptions<T extends ApiMethod> {
     method?: ApiRequestMethod<T>;
 }
 
-export type MutationRepositoryArgs<T extends ApiMethod> = {
-    arg: MutationRequestOptions<T>;
+export type MutationRepositoryArgs = {
+    arg: {
+        asFormData?: boolean;
+        body: never;
+        headers?: Record<string, string>;
+        method: never;
+        query: never;
+    };
 };
 
 export type MutationRequestOptions<T extends ApiMethod> = {
