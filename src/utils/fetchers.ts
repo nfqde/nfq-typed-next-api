@@ -24,10 +24,10 @@ export type ApiRequestMethod<T extends ApiMethod> = Parameters<T>[2];
 
 // eslint-disable-next-line @nfq/no-magic-numbers
 export type RepositoryRequestBody<T extends RepositoryMethod>
-    = Parameters<T>[1]['args'] extends {body: any} ? Parameters<T>[1]['args']['body'] : undefined;
+    = Parameters<T>[1]['arg'] extends {body: any} ? Parameters<T>[1]['arg']['body'] : undefined;
 // eslint-disable-next-line @nfq/no-magic-numbers
 export type RepositoryRequestMethod<T extends RepositoryMethod>
-    = Parameters<T>[1]['args'] extends {method: any} ? Parameters<T>[1]['args']['method'] : undefined;
+    = Parameters<T>[1]['arg'] extends {method: any} ? Parameters<T>[1]['arg']['method'] : undefined;
 
 export interface RequestOptions<T extends ApiMethod> {
     body?: ApiRequestBody<T>;
@@ -36,7 +36,7 @@ export interface RequestOptions<T extends ApiMethod> {
 }
 
 export type MutationRepositoryArgs<T extends ApiMethod> = {
-    args: MutationRequestOptions<T>;
+    arg: MutationRequestOptions<T>;
 };
 
 export type MutationRequestOptions<T extends ApiMethod> = {
@@ -53,6 +53,8 @@ export type MutationRepositoryOptions<T extends RepositoryMethod> = {
     RepositoryRequestMethod<T> extends HTTP_METHODS.GET
     ? Omit<{method: never}, 'method'> : {method: RepositoryRequestMethod<T>}
 );
+
+export type MutationRepoArgs<B, M> = {arg: {body: B; method: M}};
 
 /**
  * The fetcher method for all swr hooks.
