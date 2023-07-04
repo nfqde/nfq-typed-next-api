@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.5](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.4...v1.4.5) (2023-07-04)
+
+
+### Bug Fixes
+
+* **Types:** Add jsonification of return type for api requests ([#13](https://github.com/nfqde/nfq-typed-next-api/issues/13)) ([d0308c0](https://github.com/nfqde/nfq-typed-next-api/commit/d0308c04302cf108ee553a90ebe8456317f62192))
+
 ### [1.4.4](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.3...v1.4.4) (2023-06-30)
 
 
