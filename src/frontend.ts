@@ -22,7 +22,14 @@ import type {BareFetcher, Key, SWRConfiguration} from 'swr';
 import type {SWRInfiniteConfiguration, SWRInfiniteKeyLoader} from 'swr/infinite';
 import type {SWRMutationConfiguration} from 'swr/mutation';
 
-type ApiReturn<T extends ApiMethod> = T extends {data: any} ? T['data'] : undefined;
+export type Jsonify<T> = T extends {toJSON(...args: any): infer R} ? Jsonify<R>
+    : T extends (infer I)[] ? Jsonify<I>[]
+    : T extends (...args: any) => any ? never
+    : T extends object ? {
+        [K in keyof T]: K extends number | string ? Jsonify<T[K]> : never
+    }
+    : T;
+type ApiReturn<T extends ApiMethod> = T extends {data: any} ? Jsonify<T['data']> : undefined;
 
 const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | undefined)?.publicRuntimeConfig?.basePath
     ?? '';
@@ -58,10 +65,14 @@ export const api = async <T extends ApiMethod>(
  */
 export const useApi = <T extends ApiMethod>(
     url: string | null,
-    swrOptions?: SWRConfiguration<ApiResponse<T>['data'] | null, any, BareFetcher<ApiResponse<T>['data'] | null>>
+    swrOptions?: SWRConfiguration<
+        Jsonify<ApiResponse<T>['data']>,
+        any,
+        BareFetcher<Jsonify<ApiResponse<T>['data']>>
+    >
 ) => {
     const {data, error, isValidating, mutate}
-        = useSwr<ApiResponse<T>['data'], RequestError<T>>(url ? `${basePath}${url}` : null, fetcher, swrOptions);
+        = useSwr<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(url ? `${basePath}${url}` : null, fetcher, swrOptions);
 
     return {
         data,
@@ -81,13 +92,13 @@ export const useApi = <T extends ApiMethod>(
 export const useInfiniteApi = <T extends ApiMethod>(
     getKey: SWRInfiniteKeyLoader<ApiResponse<T>['data']>,
     swrOptions?: SWRInfiniteConfiguration<
-        ApiResponse<T>['data'] | null,
+        Jsonify<ApiResponse<T>['data']>,
         any,
-        BareFetcher<ApiResponse<T>['data'] | null>
+        BareFetcher<Jsonify<ApiResponse<T>['data']>>
     >
 ) => {
     const {data, error, isValidating, mutate, setSize, size}
-        = useSwrInfinite<ApiResponse<T>['data'], RequestError<T>>(getKey, fetcher, swrOptions);
+        = useSwrInfinite<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(getKey, fetcher, swrOptions);
 
     return {
         data,
@@ -171,7 +182,7 @@ export const useInfiniteRepository = <T extends RepositoryMethod>(
  */
 export const useMutateApi = <T extends ApiMethod>(
     url: string | null,
-    swrOptions?: SWRMutationConfiguration<ApiResponse<T>['data'] | null, any> | undefined
+    swrOptions?: SWRMutationConfiguration<Jsonify<ApiResponse<T>['data']>, any> | undefined
 ) => {
     const {
         data,
@@ -179,7 +190,7 @@ export const useMutateApi = <T extends ApiMethod>(
         isMutating,
         reset,
         trigger
-    } = useSwrMutation<ApiResponse<T>['data'] | null, RequestError<T>, Key, MutationRequestOptions<T>>(
+    } = useSwrMutation<Jsonify<ApiResponse<T>['data']>, RequestError<T>, Key, MutationRequestOptions<T>>(
         url ? `${basePath}${url}` : null,
         mutationFetcher,
         swrOptions
