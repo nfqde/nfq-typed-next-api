@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.6](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.5...v1.4.6) (2023-07-15)
+
+
+### Bug Fixes
+
+* **Fetcher:** fix using wrong fetching methods. ([#14](https://github.com/nfqde/nfq-typed-next-api/issues/14)) ([1960dce](https://github.com/nfqde/nfq-typed-next-api/commit/1960dce39b746fde52dd066c817d502e2de062a7))
+
 ### [1.4.5](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.4...v1.4.5) (2023-07-04)
 
 
