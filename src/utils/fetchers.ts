@@ -79,14 +79,21 @@ export const fetcher = async <T extends ApiMethod>(
         method
     }: RequestOptions<T> = {}
 ): Promise<ApiResponse<T>['data']> => {
+    let usedMethod = method as string;
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!method) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        usedMethod = body ? 'POST' : 'GET';
+    }
+
     const response = await fetch(url, {
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
             ...headers
         },
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        method: method || body ? 'POST' : 'GET'
+        method: usedMethod
     });
 
     if (response.status >= HTTP_STATUS.BAD_REQUEST) {
