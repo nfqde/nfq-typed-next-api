@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import cleaner from 'rollup-plugin-cleaner';
 
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line import/extensions, quotes
 import pkg from './package.json' assert { type: "json" };
 
 const globals = {};

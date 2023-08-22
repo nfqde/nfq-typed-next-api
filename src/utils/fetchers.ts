@@ -70,6 +70,7 @@ export type MutationRepoArgs<B, M> = {arg: {body: B; method: M}};
  * @param props.body    The request body.
  * @param props.headers The request headers.
  * @param props.method  The request method.
+ * @returns Returns api response.
  */
 export const fetcher = async <T extends ApiMethod>(
     url: string,
@@ -130,6 +131,7 @@ export const fetcher = async <T extends ApiMethod>(
  * @param props.arg.body    The request body.
  * @param props.arg.headers The request headers.
  * @param props.arg.method  The request method.
+ * @returns The api response.
  */
 export const mutationFetcher = async <T extends ApiMethod>(
     url: string,
