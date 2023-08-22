@@ -170,7 +170,7 @@ devDependencies:
     specifier: ^1.0.0
     version: 1.0.0(rollup@3.28.1)
   swr:
-    specifier: ^2.1.5
+    specifier: 2.1.5
     version: 2.1.5(react@18.2.0)
   terser:
     specifier: ^5.19.2
