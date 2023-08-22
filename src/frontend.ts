@@ -42,6 +42,7 @@ const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | u
  * @param props.method  Request method.
  * @param props.headers Request headers.
  * @param props.body    Request body.
+ * @returns The api call return value.
  */
 export const api = async <T extends ApiMethod>(
     url: string,
