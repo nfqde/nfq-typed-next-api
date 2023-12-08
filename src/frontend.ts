@@ -72,12 +72,13 @@ export const useApi = <T extends ApiMethod>(
         BareFetcher<Jsonify<ApiResponse<T>['data']>>
     >
 ) => {
-    const {data, error, isValidating, mutate}
+    const {data, error, isLoading, isValidating, mutate}
         = useSwr<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(url ? `${basePath}${url}` : null, fetcher, swrOptions);
 
     return {
         data,
         error,
+        isLoading,
         isValidating,
         mutate
     };
@@ -98,12 +99,13 @@ export const useInfiniteApi = <T extends ApiMethod>(
         BareFetcher<Jsonify<ApiResponse<T>['data']>>
     >
 ) => {
-    const {data, error, isValidating, mutate, setSize, size}
+    const {data, error, isLoading, isValidating, mutate, setSize, size}
         = useSwrInfinite<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(getKey, fetcher, swrOptions);
 
     return {
         data,
         error,
+        isLoading,
         isValidating,
         mutate,
         setSize,
@@ -133,12 +135,13 @@ export const useRepository = <T extends RepositoryMethod>(
         [swrOptions?.body, fetchFunction]
     );
 
-    const {data, error, isValidating, mutate}
+    const {data, error, isLoading, isValidating, mutate}
         = useSwr<RepositoryResponse<T>, RepositoryError>(cacheKey ?? null, repoFetcher, swrOptions);
 
     return {
         data,
         error,
+        isLoading,
         isValidating,
         mutate
     };
@@ -161,12 +164,13 @@ export const useInfiniteRepository = <T extends RepositoryMethod>(
         BareFetcher<RepositoryResponse<T>>
     >
 ) => {
-    const {data, error, isValidating, mutate, setSize, size}
+    const {data, error, isLoading, isValidating, mutate, setSize, size}
         = useSwrInfinite<RepositoryResponse<T>, RepositoryError>(getKey, fetchFunction, swrOptions);
 
     return {
         data,
         error,
+        isLoading,
         isValidating,
         mutate,
         setSize,
