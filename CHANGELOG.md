@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.8](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.7...v1.4.8) (2023-12-08)
+
+
+### Bug Fixes
+
+* **App:** Add isLoading and update packages ([#19](https://github.com/nfqde/nfq-typed-next-api/issues/19)) ([148cee3](https://github.com/nfqde/nfq-typed-next-api/commit/148cee3da40537b1579349e6e6bcd52880e90ad4))
+
 ### [1.4.7](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.6...v1.4.7) (2023-08-22)
 
 
