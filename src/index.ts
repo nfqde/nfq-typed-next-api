@@ -12,4 +12,4 @@ export {
 export {HTTP_METHODS, HTTP_STATUS} from './utils/constants';
 export {fetcher, mutationFetcher} from './utils/fetchers';
 export type {MutationRepoArgs, RepositoryError, RequestError} from './utils/fetchers';
-export type {Jsonify} from './frontend';
+export type {ApiReturn, Jsonify} from './frontend';

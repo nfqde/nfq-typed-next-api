@@ -29,7 +29,7 @@ export type Jsonify<T> = T extends {toJSON(...args: any): infer R} ? Jsonify<R>
         [K in keyof T]: K extends number | string ? Jsonify<T[K]> : never
     }
     : T;
-type ApiReturn<T extends ApiMethod> = T extends {data: any} ? Jsonify<T['data']> : undefined;
+export type ApiReturn<T extends ApiMethod> = T extends {data: any} ? Jsonify<T['data']> : undefined;
 
 const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | undefined)?.publicRuntimeConfig?.basePath
     ?? '';
