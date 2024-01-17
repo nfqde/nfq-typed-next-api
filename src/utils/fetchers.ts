@@ -101,9 +101,14 @@ export const fetcher = async <T extends ApiMethod>(
         const error = new Error('Something went wrong') as RequestError<T>;
 
         try {
-            const data = await response.json() as ApiResponse<T>['message'];
+            const data = await response.text();
 
-            error.info = data;
+            try {
+                error.info = JSON.parse(data) as ApiResponse<T>['message'];
+            } catch {
+                error.info = data as ApiResponse<T>['message'];
+            }
+
             error.status = response.status;
         } catch {
             error.info = 'Something went wrong';
@@ -178,9 +183,14 @@ export const mutationFetcher = async <T extends ApiMethod>(
         const error = new Error('Something went wrong') as RequestError<T>;
 
         try {
-            const data = await response.json() as ApiResponse<T>['message'];
+            const data = await response.text();
 
-            error.info = data;
+            try {
+                error.info = JSON.parse(data) as ApiResponse<T>['message'];
+            } catch {
+                error.info = data as ApiResponse<T>['message'];
+            }
+
             error.status = response.status;
         } catch {
             error.info = 'Something went wrong';
