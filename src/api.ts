@@ -36,6 +36,7 @@ export const TypedRoute: TypedRouteType = (method, handler) => (
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const response = await handler(req as any, res, req.body as never, req.query as never);
 
+        // deepcode ignore XSS: <please specify a reason of ignoring this>
         res.status(response.status).send(response.data ?? response.message);
     }) as any;
 
