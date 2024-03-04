@@ -1,3 +1,4 @@
+import {ApiError} from './ApiError';
 import {HTTP_STATUS} from './constants';
 
 import type {HTTP_METHODS} from './constants';
@@ -97,33 +98,36 @@ export const fetcher = async <T extends ApiMethod>(
         method: usedMethod
     });
 
-    if (response.status >= HTTP_STATUS.BAD_REQUEST) {
-        const error = new Error('Something went wrong') as RequestError<T>;
+    if (!response.ok) {
+        const data = await response.text();
+        let error;
 
         try {
-            const data = await response.text();
+            const errorData = JSON.parse(data) as ApiResponse<T>;
 
-            try {
-                error.info = JSON.parse(data) as ApiResponse<T>['message'];
-            } catch {
-                error.info = data as ApiResponse<T>['message'];
-            }
-
-            error.status = response.status;
+            error = new ApiError<T>(
+                response.status,
+                errorData.message as ApiResponse<T>['message']
+            );
         } catch {
-            error.info = 'Something went wrong';
-            error.status = response.status;
+            error = new ApiError<T>(
+                response.status,
+                data as ApiResponse<T>['message']
+            );
         }
 
         throw error;
     }
 
+    let responseData;
+
     try {
+        responseData = await response.text();
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return await response.json() as ApiResponse<T>['data'];
+        return JSON.parse(responseData) as ApiResponse<T>['data'];
     } catch {
         // eslint-disable-next-line no-undefined
-        return undefined;
+        return responseData;
     }
 };
 
@@ -179,22 +183,22 @@ export const mutationFetcher = async <T extends ApiMethod>(
         method: ('method' in arg) ? arg.method : 'GET'
     });
 
-    if (response.status >= HTTP_STATUS.BAD_REQUEST) {
-        const error = new Error('Something went wrong') as RequestError<T>;
+    if (!response.ok) {
+        const data = await response.text();
+        let error;
 
         try {
-            const data = await response.text();
+            const errorData = JSON.parse(data) as ApiResponse<T>;
 
-            try {
-                error.info = JSON.parse(data) as ApiResponse<T>['message'];
-            } catch {
-                error.info = data as ApiResponse<T>['message'];
-            }
-
-            error.status = response.status;
+            error = new ApiError<T>(
+                response.status,
+                errorData.message as ApiResponse<T>['message']
+            );
         } catch {
-            error.info = 'Something went wrong';
-            error.status = response.status;
+            error = new ApiError<T>(
+                response.status,
+                data as ApiResponse<T>['message']
+            );
         }
 
         throw error;
@@ -205,6 +209,14 @@ export const mutationFetcher = async <T extends ApiMethod>(
         return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await response.json() as ApiResponse<T>['data'];
+    let responseData;
+
+    try {
+        responseData = await response.text();
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return JSON.parse(responseData) as ApiResponse<T>['data'];
+    } catch {
+        // eslint-disable-next-line no-undefined
+        return responseData;
+    }
 };
