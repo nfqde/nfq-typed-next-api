@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.10...v1.5.0) (2024-03-04)
+
+
+### Features
+
+* **Error:** Add dedicated error class and handling for string returns ([#24](https://github.com/nfqde/nfq-typed-next-api/issues/24)) ([af73db2](https://github.com/nfqde/nfq-typed-next-api/commit/af73db21e53da8e2436c67d98275933d5150ea94))
+
 ### [1.4.10](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.9...v1.4.10) (2024-01-17)
 
 
