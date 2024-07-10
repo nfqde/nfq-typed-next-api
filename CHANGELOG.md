@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/nfqde/nfq-typed-next-api/compare/v1.5.0...v1.5.2) (2024-07-10)
+
+
+### Bug Fixes
+
+* **fetchers:** Add possibility for formdata ([#25](https://github.com/nfqde/nfq-typed-next-api/issues/25)) ([d6b42d4](https://github.com/nfqde/nfq-typed-next-api/commit/d6b42d448f85b44ca3d43a9bd24500578f5ddcd0))
+
 ## [1.5.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.4.10...v1.5.0) (2024-03-04)
 
 
