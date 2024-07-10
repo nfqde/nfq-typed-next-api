@@ -31,7 +31,7 @@ export type RepositoryRequestMethod<T extends RepositoryMethod>
     = Parameters<T>[1]['arg'] extends {method: any} ? Parameters<T>[1]['arg']['method'] : undefined;
 
 export interface RequestOptions<T extends ApiMethod> {
-    body?: ApiRequestBody<T>;
+    body?: ApiRequestBody<T> | FormData;
     headers?: Record<string, string>;
     method?: ApiRequestMethod<T>;
 }
@@ -82,6 +82,7 @@ export const fetcher = async <T extends ApiMethod>(
     }: RequestOptions<T> = {}
 ): Promise<ApiResponse<T>['data']> => {
     let usedMethod = method as string;
+    const isFormData = body instanceof FormData;
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!method) {
@@ -90,9 +91,9 @@ export const fetcher = async <T extends ApiMethod>(
     }
 
     const response = await fetch(url, {
-        body: JSON.stringify(body),
+        body: isFormData ? body : JSON.stringify(body),
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : {'Content-Type': 'application/json'}),
             ...headers
         },
         method: usedMethod
