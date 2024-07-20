@@ -19,7 +19,7 @@ import type {
     RequestOptions
 } from './utils/fetchers';
 import type {BareFetcher, Key, SWRConfiguration} from 'swr';
-import type {SWRInfiniteConfiguration, SWRInfiniteKeyLoader} from 'swr/infinite';
+import type {SWRInfiniteConfiguration, SWRInfiniteKeyLoader, SWRInfiniteResponse} from 'swr/infinite';
 import type {SWRMutationConfiguration} from 'swr/mutation';
 
 export type Jsonify<T> = T extends {toJSON(...args: any): infer R} ? Jsonify<R>
@@ -110,7 +110,7 @@ export const useInfiniteApi = <T extends ApiMethod>(
         mutate,
         setSize,
         size
-    };
+    } as SWRInfiniteResponse<Jsonify<ApiResponse<T>['data']>, RepositoryError>;
 };
 
 type RepositorySwrOptions<T extends RepositoryMethod> =
@@ -175,7 +175,7 @@ export const useInfiniteRepository = <T extends RepositoryMethod>(
         mutate,
         setSize,
         size
-    };
+    } as SWRInfiniteResponse<RepositoryResponse<T>, RepositoryError>;
 };
 
 /**

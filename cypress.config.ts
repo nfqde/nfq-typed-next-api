@@ -64,7 +64,6 @@ export default defineConfig({
             reportDir: 'cypress/reports'
         },
         video: false,
-        videoUploadOnPasses: false,
         /**
          * Sets up plugins and so on.
          *
@@ -78,6 +77,5 @@ export default defineConfig({
             return config;
         }
     },
-    video: false,
-    videoUploadOnPasses: false
+    video: false
 });
