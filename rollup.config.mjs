@@ -5,7 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import cleaner from 'rollup-plugin-cleaner';
 
 // eslint-disable-next-line import/extensions, quotes
-import pkg from './package.json' assert { type: "json" };
+import pkg from './package.json' with { type: "json" };
 
 const globals = {};
 
