@@ -186,7 +186,7 @@ export const mutationFetcher = async <T extends ApiMethod>(
         body,
         credentials: arg.credentials,
         headers,
-        method: ('method' in arg) ? arg.method : 'GET',
+        method: ('method' in arg) ? arg.method : 'GET'
     });
 
     if (!response.ok) {
