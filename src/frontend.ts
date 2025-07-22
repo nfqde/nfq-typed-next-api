@@ -37,22 +37,25 @@ const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | u
 /**
  * Non hook version of api.
  *
- * @param url           API URL.
- * @param props         Request options.
- * @param props.method  Request method.
- * @param props.headers Request headers.
- * @param props.body    Request body.
+ * @param url               API URL.
+ * @param props             Request options.
+ * @param props.method      Request method.
+ * @param props.headers     Request headers.
+ * @param props.body        Request body.
+ * @param props.credentials The credentials parameter.
  * @returns The api call return value.
  */
 export const api = async <T extends ApiMethod>(
     url: string,
     {
         body,
+        credentials,
         headers = {},
         method
     }: RequestOptions<T> = {}
 ): Promise<ApiReturn<Awaited<ReturnType<T>>>> => fetcher<T>(url, {
     body,
+    credentials,
     headers,
     method
 });

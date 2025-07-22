@@ -68,11 +68,12 @@ export type MutationRepoArgs<B, M> = {arg: {body: B; method: M}};
 /**
  * The fetcher method for all swr hooks.
  *
- * @param url           The url to fetch.
- * @param props         The request options.
- * @param props.body    The request body.
- * @param props.headers The request headers.
- * @param props.method  The request method.
+ * @param url               The url to fetch.
+ * @param props             The request options.
+ * @param props.body        The request body.
+ * @param props.headers     The request headers.
+ * @param props.method      The request method.
+ * @param props.credentials The credentials parameter.
  * @returns Returns api response.
  */
 export const fetcher = async <T extends ApiMethod>(
