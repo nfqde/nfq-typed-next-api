@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.5.5...v1.6.0) (2025-07-22)
+
+
+### Features
+
+* **fetchers:** Add credentials parameter ([#45](https://github.com/nfqde/nfq-typed-next-api/issues/45)) ([5e9a11d](https://github.com/nfqde/nfq-typed-next-api/commit/5e9a11d3011d1e0b93e25ed053af6ec98e1695cb))
+
 ### [1.5.5](https://github.com/nfqde/nfq-typed-next-api/compare/v1.5.4...v1.5.5) (2024-11-15)
 
 
