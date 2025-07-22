@@ -32,6 +32,7 @@ export type RepositoryRequestMethod<T extends RepositoryMethod>
 
 export interface RequestOptions<T extends ApiMethod> {
     body?: ApiRequestBody<T> | FormData;
+    credentials?: RequestCredentials;
     headers?: Record<string, string>;
     method?: ApiRequestMethod<T>;
 }
@@ -48,6 +49,7 @@ export type MutationRepositoryArgs = {
 
 export type MutationRequestOptions<T extends ApiMethod> = {
     asFormData?: boolean;
+    credentials?: RequestCredentials;
     headers?: Record<string, string>;
 } & (ApiRequestBody<T> extends undefined ? Omit<{body: never}, 'body'> : {body: ApiRequestBody<T>})
 & (ApiRequestMethod<T> extends HTTP_METHODS.GET ? Omit<{method: never}, 'method'> : {method: ApiRequestMethod<T>});
@@ -77,6 +79,7 @@ export const fetcher = async <T extends ApiMethod>(
     url: string,
     {
         body,
+        credentials,
         headers = {},
         method
     }: RequestOptions<T> = {}
@@ -92,6 +95,7 @@ export const fetcher = async <T extends ApiMethod>(
 
     const response = await fetch(url, {
         body: isFormData ? body : JSON.stringify(body),
+        credentials,
         headers: {
             ...(isFormData ? {} : {'Content-Type': 'application/json'}),
             ...headers
@@ -180,8 +184,9 @@ export const mutationFetcher = async <T extends ApiMethod>(
 
     const response = await fetch(url, {
         body,
+        credentials: arg.credentials,
         headers,
-        method: ('method' in arg) ? arg.method : 'GET'
+        method: ('method' in arg) ? arg.method : 'GET',
     });
 
     if (!response.ok) {
