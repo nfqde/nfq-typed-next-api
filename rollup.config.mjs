@@ -14,7 +14,7 @@ export default [
         external: [...Object.keys({
             ...pkg.peerDependencies,
             ...pkg.external
-        } || {}), 'next/config', 'next/router', 'swr/mutation'],
+        } || {}), 'next/router', 'swr/mutation'],
         input: 'src/index.ts',
         output: [
             {

@@ -1,6 +1,5 @@
 import {useMemo} from 'react';
 
-import getConfig from 'next/config';
 import useSwr, {preload} from 'swr';
 import useSwrInfinite from 'swr/infinite';
 import useSwrMutation from 'swr/mutation';
@@ -30,9 +29,6 @@ export type Jsonify<T> = T extends {toJSON(...args: any): infer R} ? Jsonify<R>
     }
     : T;
 export type ApiReturn<T extends ApiMethod> = T extends {data: any} ? Jsonify<T['data']> : undefined;
-
-const basePath = (getConfig() as {publicRuntimeConfig?: {basePath?: string}} | undefined)?.publicRuntimeConfig?.basePath
-    ?? '';
 
 /**
  * Non hook version of api.
@@ -76,7 +72,7 @@ export const useApi = <T extends ApiMethod>(
     >
 ) => {
     const {data, error, isLoading, isValidating, mutate}
-        = useSwr<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(url ? `${basePath}${url}` : null, fetcher, swrOptions);
+        = useSwr<Jsonify<ApiResponse<T>['data']>, RequestError<T>>(url ?? null, fetcher, swrOptions);
 
     return {
         data,
@@ -199,7 +195,7 @@ export const useMutateApi = <T extends ApiMethod>(
         reset,
         trigger
     } = useSwrMutation<Jsonify<ApiResponse<T>['data']>, RequestError<T>, Key, MutationRequestOptions<T>>(
-        url ? `${basePath}${url}` : null,
+        url ?? null,
         mutationFetcher,
         swrOptions
     );
@@ -255,5 +251,5 @@ export const useMutateRepository = <T extends RepositoryMethod>(
  * @returns A promise that resolves when the data is preloaded.
  */
 export const preloadData = async (url: string, fetchFunction?: BareFetcher<any>) => {
-    await preload(fetchFunction ? url : `${basePath}${url}`, fetchFunction ?? fetcher);
+    await preload(url, fetchFunction ?? fetcher);
 };
