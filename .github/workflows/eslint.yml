@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Node.JS 16.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - name: Node.JS 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: "16.x"
+          node-version: "20.x"
 
       - name: Set Tokens
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
@@ -44,13 +44,13 @@ jobs:
         continue-on-error: true
 
       - name: Annotate Code Linting Results
-        uses: ataylorme/eslint-annotate-action@1.0.4
+        uses: ataylorme/eslint-annotate-action@2.2.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           report-json: "eslint_report.json"
 
       - name: Upload ESLint report
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: eslint_report.json
           path: eslint_report.json

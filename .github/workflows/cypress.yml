@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Node.JS 16.x
-        uses: actions/setup-node@v1
+      - name: Node.JS 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: "16.x"
+          node-version: "20.x"
 
       - name: Set Tokens
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
@@ -38,16 +38,19 @@ jobs:
         run: pnpm install
 
       - name: Cypress.io
-        uses: cypress-io/github-action@v2.9.7
+        uses: cypress-io/github-action@v6
         with:
-          config-file: cypress.json
+          config-file: cypress.config.ts
           browser: chrome
+          component: true
           command: pnpm run test
           install: false
-          headless: true
+          headed: false
+        env:
+          NODE_ENV: test
 
       - name: Cypress report action
-        uses: dmitry/cypress-report-action@1.0.0
+        uses: dmitry/cypress-report-action@v1
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           pathname: cypress/reports/index.json
