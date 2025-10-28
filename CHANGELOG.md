@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.6.1...v1.7.0) (2025-10-28)
+
+
+### Features
+
+* **Nextjs:** Remove deprecated next/config ([#47](https://github.com/nfqde/nfq-typed-next-api/issues/47)) ([1a9687f](https://github.com/nfqde/nfq-typed-next-api/commit/1a9687f7b9c7f6f4e31e5c347b804521963c820a))
+
 ### [1.6.1](https://github.com/nfqde/nfq-typed-next-api/compare/v1.6.0...v1.6.1) (2025-07-22)
 
 
