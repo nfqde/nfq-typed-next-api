@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.7.0...v1.8.0) (2025-11-16)
+
+
+### Features
+
+* **Streams:** Add streaming support ([#48](https://github.com/nfqde/nfq-typed-next-api/issues/48)) ([b22ae82](https://github.com/nfqde/nfq-typed-next-api/commit/b22ae82f870d2e6587c9ff85a7174dd61ab305d2))
+
 ## [1.7.0](https://github.com/nfqde/nfq-typed-next-api/compare/v1.6.1...v1.7.0) (2025-10-28)
 
 
