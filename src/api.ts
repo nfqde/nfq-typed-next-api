@@ -4,7 +4,14 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 
 export type TypedRouteType = <
     METHOD extends HTTP_METHODS,
-    R extends {data?: unknown; message?: unknown; status: HTTP_STATUS},
+    R extends {
+        data?: unknown;
+        headers?: Headers | Map<string, number | string | readonly string[]>;
+        message?: unknown;
+        status: HTTP_STATUS;
+        // eslint-disable-next-line no-undef
+        stream?: NodeJS.ReadableStream;
+    },
     REQUEST extends NextApiRequest = NextApiRequest,
     BODY = undefined,
     QUERY = undefined
@@ -36,8 +43,18 @@ export const TypedRoute: TypedRouteType = (method, handler) => (
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const response = await handler(req as any, res, req.body as never, req.query as never);
 
-        // deepcode ignore XSS: <please specify a reason of ignoring this>
-        res.status(response.status).send(response.data ?? response.message);
+        res.status(response.status);
+
+        if (response.headers) {
+            res.setHeaders(response.headers);
+        }
+
+        if (response.stream) {
+            response.stream.pipe(res);
+            return;
+        }
+
+        res.send(response.data ?? response.message);
     }) as any;
 
 /**
